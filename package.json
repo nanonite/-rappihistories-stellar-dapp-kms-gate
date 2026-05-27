@@ -13,7 +13,11 @@
   },
   "scripts": {
     "build": "tsc -b",
+    "test": "bun test src/test-vectors/conformance.test.ts",
     "typecheck": "tsc -b --pretty false"
+  },
+  "peerDependencies": {
+    "@medichain/domain": "0.1.0"
   },
   "devDependencies": {
     "typescript": "^5.5.0"
