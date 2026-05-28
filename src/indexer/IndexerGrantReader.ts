@@ -97,7 +97,8 @@ function toGrantType(value: string): GrantType {
   if (
     value === "normal" ||
     value === "break_glass" ||
-    value === "offline_emergency"
+    value === "offline_emergency" ||
+    value === "write"
   ) {
     return value;
   }

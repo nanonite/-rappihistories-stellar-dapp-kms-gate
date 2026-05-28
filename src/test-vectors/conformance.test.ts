@@ -191,11 +191,22 @@ const conformanceVectors: readonly ConformanceVector[] = [
     nowSeconds,
     expected: { allowed: false, reason: "NO_GRANT" },
   },
+  {
+    id: 16,
+    name: "write grant cannot release ciphertext",
+    grant: grantWith("grant-write-not-releasable", {
+      grantType: "write",
+      revealAt: 0,
+    }),
+    requester: caller,
+    nowSeconds,
+    expected: { allowed: false, reason: "WRITE_GRANT_NOT_RELEASABLE" },
+  },
 ];
 
 describe("KMS release predicate conformance", () => {
   test("covers the complete MVP truth table", () => {
-    expect(conformanceVectors).toHaveLength(15);
+    expect(conformanceVectors).toHaveLength(16);
   });
 
   for (const vector of conformanceVectors) {
