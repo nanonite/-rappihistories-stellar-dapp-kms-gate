@@ -1,11 +1,11 @@
 import type { PredicateDenyReason } from "@medichain/domain";
-import type { LocalKeyStore } from "../keys/LocalKeyStore";
-import type { ReleasePredicateEvaluator } from "../predicate/ReleasePredicateEvaluator";
+import type { LocalKeyStore } from "../keys/LocalKeyStore.js";
+import type { ReleasePredicateEvaluator } from "../predicate/ReleasePredicateEvaluator.js";
 import {
   Ed25519RequesterAuthVerifier,
   type RequesterAuthVerifier,
-} from "./ReleaseAuth";
-import { RequesterRateLimiter } from "./RequesterRateLimiter";
+} from "./ReleaseAuth.js";
+import { RequesterRateLimiter } from "./RequesterRateLimiter.js";
 
 export interface ReleaseHttpApiOptions {
   readonly evaluator: ReleasePredicateEvaluator;
