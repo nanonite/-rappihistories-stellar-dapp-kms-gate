@@ -110,7 +110,7 @@
 
               cd ./kms-gate
               tsc -b --pretty false
-              bun test src/test-vectors/conformance.test.ts
+              bun test src/test src/test-vectors/conformance.test.ts
 
               if [ -f src/predicate/ReleasePredicateEvaluator.ts ]; then
                 grep -q 'from "@medichain/domain"' src/predicate/ReleasePredicateEvaluator.ts
