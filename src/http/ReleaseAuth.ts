@@ -14,7 +14,7 @@ export class Ed25519RequesterAuthVerifier implements RequesterAuthVerifier {
   async verifyReleaseRequest(input: ReleaseAuthInput): Promise<boolean> {
     const publicKey = await crypto.subtle.importKey(
       "raw",
-      decodeBase64Url(input.requester),
+      decodeRequesterPublicKey(input.requester),
       "Ed25519",
       false,
       ["verify"],
@@ -33,6 +33,29 @@ export class Ed25519RequesterAuthVerifier implements RequesterAuthVerifier {
   }
 }
 
+function decodeRequesterPublicKey(value: string): ArrayBuffer {
+  if (/^G[A-Z2-7]{55}$/.test(value)) {
+    return decodeStellarPublicKey(value);
+  }
+
+  return decodeBase64Url(value);
+}
+
+function decodeStellarPublicKey(publicKey: string): ArrayBuffer {
+  const decoded = base32Decode(publicKey);
+  const versionByte = decoded[0];
+  const payload = decoded.slice(1, 33);
+
+  if (versionByte !== 0x30 || payload.length !== 32) {
+    throw new Error("Invalid Stellar public key");
+  }
+
+  return payload.buffer.slice(
+    payload.byteOffset,
+    payload.byteOffset + payload.byteLength,
+  );
+}
+
 function decodeBase64Url(value: string): ArrayBuffer {
   const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
   const padded = normalized.padEnd(
@@ -48,4 +71,29 @@ function decodeBase64Url(value: string): ArrayBuffer {
   }
 
   return buffer;
+}
+
+function base32Decode(value: string): Uint8Array {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = 0;
+  let bitCount = 0;
+  const bytes: number[] = [];
+
+  for (const char of value.replace(/=+$/g, "")) {
+    const index = alphabet.indexOf(char.toUpperCase());
+
+    if (index < 0) {
+      throw new Error("Invalid base32 character");
+    }
+
+    bits = (bits << 5) | index;
+    bitCount += 5;
+
+    if (bitCount >= 8) {
+      bytes.push((bits >>> (bitCount - 8)) & 0xff);
+      bitCount -= 8;
+    }
+  }
+
+  return Uint8Array.from(bytes);
 }
