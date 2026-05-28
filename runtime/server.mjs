@@ -1,18 +1,24 @@
 import { createServer } from "node:http";
 
 import {
+  IndexerGrantReader,
   LocalKeyStore,
   ReleaseHttpApi,
   ReleasePredicateEvaluator,
 } from "../dist/index.js";
 
 const port = Number(process.env.KMS_GATE_PORT ?? "8790");
+const apiIndexerUrl = process.env.API_INDEXER_URL;
+
+if (!apiIndexerUrl) {
+  throw new Error("API_INDEXER_URL is required to start kms-gate");
+}
 
 const api = new ReleaseHttpApi({
   evaluator: new ReleasePredicateEvaluator({
-    async readGrant() {
-      return null;
-    },
+    grantReader: new IndexerGrantReader({
+      baseUrl: apiIndexerUrl,
+    }),
   }),
   keyStore: new LocalKeyStore(),
 });

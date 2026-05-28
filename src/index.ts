@@ -15,6 +15,12 @@ export type {
   WrappedKeyMaterial,
 } from "./keys/LocalKeyStore.js";
 export {
+  IndexerGrantReader,
+} from "./indexer/IndexerGrantReader.js";
+export type {
+  IndexerGrantReaderOptions,
+} from "./indexer/IndexerGrantReader.js";
+export {
   Ed25519RequesterAuthVerifier,
 } from "./http/ReleaseAuth.js";
 export type {

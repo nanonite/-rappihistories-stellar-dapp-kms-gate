@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 ### Changed
+- KMS e2e indexer-backed grant reader (#5)
 - KMS-3 — HTTP API for key release (#3)
 - KMS-1 — KMS gate scaffold and Stellar state reader (#1)
 - KMS-4 — Conformance test suite (predicate truth table) (#4)
