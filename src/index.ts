@@ -14,3 +14,26 @@ export {
 export type {
   WrappedKeyMaterial,
 } from "./keys/LocalKeyStore";
+export {
+  Ed25519RequesterAuthVerifier,
+} from "./http/ReleaseAuth";
+export type {
+  ReleaseAuthInput,
+  RequesterAuthVerifier,
+} from "./http/ReleaseAuth";
+export {
+  ReleaseHttpApi,
+} from "./http/ReleaseHttpApi";
+export type {
+  ReleaseAuditDecision,
+  ReleaseAuditEvent,
+  ReleaseAuditLogger,
+  ReleaseHttpApiOptions,
+  ReleaseRequestBody,
+} from "./http/ReleaseHttpApi";
+export {
+  RequesterRateLimiter,
+} from "./http/RequesterRateLimiter";
+export type {
+  RequesterRateLimiterOptions,
+} from "./http/RequesterRateLimiter";
